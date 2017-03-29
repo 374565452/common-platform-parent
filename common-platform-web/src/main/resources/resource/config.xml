@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+     "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+ <beans>
+ 	<!-- <bean id="deviceStatusConfig" class="com.cov001.rds.controller.base.DeviceStatusConfiguration" scope="singleton">
+ 		<property name="deviceStatus">
+ 			<map>
+ 				<entry key="net_disconnect" value="00000000000000FF"></entry>
+ 				<entry key="net_connect" value="0000000000000000"></entry>
+ 				<entry key="net_connect_status" value="8000000000000000"></entry>
+ 			</map>
+ 		</property>
+ 	</bean>
+	
+	<bean id="errorInfo" class="com.cov001.rds.controller.base.ErrorInfo" scope="singleton">
+		<property name="errorInfo">
+			<map>
+				<entry key="00001" value="无设备数据信息"></entry>
+				<entry key="00002" value="获取设备状态信息失败"></entry>
+				<entry key="00003" value="获取设备类型信息失败"></entry>
+				<entry key="00004" value="验证码不能为空"></entry>
+				<entry key="00005" value="验证码输入有误"></entry>
+				<entry key="00006" value="用户名不能为空"></entry>
+				<entry key="00007" value="密码不能为空"></entry>
+				<entry key="00008" value="此用户不存在"></entry>
+				<entry key="00009" value="密码不正确"></entry>
+				<entry key="00010" value="用户登陆过期，重新登陆"></entry>
+				
+				<entry key="00011" value="设备编号不能为空"></entry>
+				<entry key="00012" value="设备类型不能为空"></entry>
+				<entry key="00013" value="此设备编号已经存在"></entry>
+				
+				<entry key="00014" value="删除设备时，传入的参数不正确"></entry>
+				<entry key="00015" value="修改设备时，传入的参数不正确"></entry>
+			</map>
+		</property>
+	</bean> 	
+ 	
+ 	
+ 	<bean id="constConfig" class="com.cov001.rds.controller.base.ConstConfig" scope="singleton">
+		<property name="constInfo">
+			<map>
+				<entry key="COOKIE_ENCRPT_VALUE" value="rdsBroadcast"></entry>
+			</map>
+		</property>
+	</bean> 	 -->
+ 	
+ </beans>
