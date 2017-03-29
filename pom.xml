@@ -221,5 +221,10 @@
   
 	<modules>
 		<module>common-platform-gateway</module>
+		<module>common-platform-utils</module>
+		<module>common-platform-model</module>
+		<module>common-platform-mapper</module>
+		<module>common-platform-service</module>
+		<module>common-platform-web</module>
 	</modules>
 </project>

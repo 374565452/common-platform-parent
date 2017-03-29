@@ -1,20 +1,14 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>common-platform</groupId>
-		<artifactId>common-platform-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
-	<groupId>common-platform-gateway</groupId>
-	<artifactId>common-platform-gateway</artifactId>
-	<dependencies>
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-all</artifactId>
-		</dependency>
-	</dependencies>
-	<build>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>common-platform</groupId>
+    <artifactId>common-platform-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>common-platform-model</groupId>
+  <artifactId>common-platform-model</artifactId>
+  
+  <build>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -32,5 +26,5 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
+  
 </project>
