@@ -219,4 +219,7 @@
 		</dependencies>
 	</dependencyManagement>
   
+	<modules>
+		<module>common-platform-gateway</module>
+	</modules>
 </project>
