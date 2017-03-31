@@ -38,6 +38,6 @@
 	<!-- 切面 -->
 	<aop:config>
 		<aop:advisor advice-ref="txAdvice"
-			pointcut="execution(* com.cov001.rds.service.*.*(..))" />
+			pointcut="execution(* com.common.platform.service.*.*(..))" />
 	</aop:config>
 </beans>

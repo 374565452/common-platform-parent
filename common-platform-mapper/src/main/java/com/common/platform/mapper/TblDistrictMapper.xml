@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.common.platform.mapper.TblDistrictMapper" >
+  <resultMap id="BaseResultMap" type="com.common.platform.model.TblDistrict" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="dis_name" property="disName" jdbcType="VARCHAR" />
+    <result column="dis_code" property="disCode" jdbcType="VARCHAR" />
+    <result column="dis_logic_address" property="disLogicAddress" jdbcType="VARCHAR" />
+    <result column="area_level_id" property="areaLevelId" jdbcType="BIGINT" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="longitude" property="longitude" jdbcType="DOUBLE" />
+    <result column="latitude" property="latitude" jdbcType="DOUBLE" />
+    <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
+    <result column="updated_date" property="updatedDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, dis_name, dis_code, dis_logic_address, area_level_id, parent_id, longitude, latitude, 
+    created_date, updated_date, status, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.common.platform.model.TblDistrictExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_district
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_district
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_district
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.common.platform.model.TblDistrictExample" >
+    delete from tbl_district
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.common.platform.model.TblDistrict" >
+    insert into tbl_district (id, dis_name, dis_code, 
+      dis_logic_address, area_level_id, parent_id, 
+      longitude, latitude, created_date, 
+      updated_date, status, remark
+      )
+    values (#{id,jdbcType=BIGINT}, #{disName,jdbcType=VARCHAR}, #{disCode,jdbcType=VARCHAR}, 
+      #{disLogicAddress,jdbcType=VARCHAR}, #{areaLevelId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, 
+      #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, #{createdDate,jdbcType=TIMESTAMP}, 
+      #{updatedDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.common.platform.model.TblDistrict" >
+    insert into tbl_district
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="disName != null" >
+        dis_name,
+      </if>
+      <if test="disCode != null" >
+        dis_code,
+      </if>
+      <if test="disLogicAddress != null" >
+        dis_logic_address,
+      </if>
+      <if test="areaLevelId != null" >
+        area_level_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="createdDate != null" >
+        created_date,
+      </if>
+      <if test="updatedDate != null" >
+        updated_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="disName != null" >
+        #{disName,jdbcType=VARCHAR},
+      </if>
+      <if test="disCode != null" >
+        #{disCode,jdbcType=VARCHAR},
+      </if>
+      <if test="disLogicAddress != null" >
+        #{disLogicAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="areaLevelId != null" >
+        #{areaLevelId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="createdDate != null" >
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null" >
+        #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.common.platform.model.TblDistrictExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_district
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_district
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.disName != null" >
+        dis_name = #{record.disName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.disCode != null" >
+        dis_code = #{record.disCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.disLogicAddress != null" >
+        dis_logic_address = #{record.disLogicAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaLevelId != null" >
+        area_level_id = #{record.areaLevelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.longitude != null" >
+        longitude = #{record.longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.latitude != null" >
+        latitude = #{record.latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.createdDate != null" >
+        created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedDate != null" >
+        updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_district
+    set id = #{record.id,jdbcType=BIGINT},
+      dis_name = #{record.disName,jdbcType=VARCHAR},
+      dis_code = #{record.disCode,jdbcType=VARCHAR},
+      dis_logic_address = #{record.disLogicAddress,jdbcType=VARCHAR},
+      area_level_id = #{record.areaLevelId,jdbcType=BIGINT},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      longitude = #{record.longitude,jdbcType=DOUBLE},
+      latitude = #{record.latitude,jdbcType=DOUBLE},
+      created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.common.platform.model.TblDistrict" >
+    update tbl_district
+    <set >
+      <if test="disName != null" >
+        dis_name = #{disName,jdbcType=VARCHAR},
+      </if>
+      <if test="disCode != null" >
+        dis_code = #{disCode,jdbcType=VARCHAR},
+      </if>
+      <if test="disLogicAddress != null" >
+        dis_logic_address = #{disLogicAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="areaLevelId != null" >
+        area_level_id = #{areaLevelId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="createdDate != null" >
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null" >
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.common.platform.model.TblDistrict" >
+    update tbl_district
+    set dis_name = #{disName,jdbcType=VARCHAR},
+      dis_code = #{disCode,jdbcType=VARCHAR},
+      dis_logic_address = #{disLogicAddress,jdbcType=VARCHAR},
+      area_level_id = #{areaLevelId,jdbcType=BIGINT},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      longitude = #{longitude,jdbcType=DOUBLE},
+      latitude = #{latitude,jdbcType=DOUBLE},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

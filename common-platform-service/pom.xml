@@ -30,6 +30,16 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>common-platform-mapper</groupId>
+			<artifactId>common-platform-mapper</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>common-platform-model</groupId>
+			<artifactId>common-platform-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
   </dependencies>
   <build>
 		<pluginManagement>
