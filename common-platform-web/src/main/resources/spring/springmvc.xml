@@ -19,15 +19,15 @@
 	<mvc:annotation-driven />
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="prefix" value="/WEB-INF/common-platform/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 	<!-- 资源映射 -->
-	<mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
-	<mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
-	<mvc:resources location="/WEB-INF/fonts" mapping="/fonts/**"/>
-	<mvc:resources location="/WEB-INF/images" mapping="/images/**"/>
-	
+	<mvc:resources location="/WEB-INF/common-platform/css/" mapping="/css/**"/>
+	<mvc:resources location="/WEB-INF/common-platform/js/" mapping="/js/**"/>
+	<mvc:resources location="/WEB-INF/common-platform/fonts/" mapping="/fonts/**"/>
+	<mvc:resources location="/WEB-INF/common-platform/img/" mapping="/images/**"/>
+	<mvc:resources location="/WEB-INF/common-platform/lib/" mapping="/lib/**"/>
 	<!-- <mvc:interceptors>
 		国际化操作拦截器 如果采用基于（请求/Session/Cookie）则必需配置
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
