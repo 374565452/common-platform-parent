@@ -9,7 +9,9 @@ import com.common.platform.mapper.TblDistrictMapper;
 import com.common.platform.model.TblDistrict;
 import com.common.platform.model.TblDistrictExample;
 import com.common.platform.model.TblDistrictExample.Criteria;
+import com.common.platform.service.ICacheService;
 import com.common.platform.service.IDistrictService;
+import com.common.platform.utils.dto.ZTreeNode;
 
 @Service
 public class DistrictServiceImpl implements IDistrictService {
@@ -17,13 +19,16 @@ public class DistrictServiceImpl implements IDistrictService {
 	@Autowired
 	private TblDistrictMapper mapper;
 	
+	@Autowired
+	private ICacheService cacheService;
+	
 	@Override
 	public List<TblDistrict> getAllDistrict() {
 		TblDistrictExample example =new TblDistrictExample();
-		System.out.println("bbbbbbdddddbbbbbbbbbbbbbbbbbbbb");
+		//System.out.println("bbbbbbdddddbbbbbbbbbbbbbbbbbbbb");
 		try{
 			List<TblDistrict> diss=mapper.selectByExample(example);
-			System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+			//System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 			if(diss != null && diss.size()>0){
 				return diss;
 			}
@@ -39,10 +44,64 @@ public class DistrictServiceImpl implements IDistrictService {
 		TblDistrictExample example =new TblDistrictExample();
 		Criteria criteria = example.createCriteria();
 		criteria.andIdEqualTo(id);
-		System.out.println(mapper+"-==========");
+		//System.out.println(mapper+"-==========");
 		List<TblDistrict> list = mapper.selectByExample(example);
-		System.out.println(list.size() +"==================");
+		//System.out.println(list.size() +"==================");
 		return null;
 	}
 
+	@Override
+	public List<TblDistrict> findDistrictsByPid(long pid) {
+		TblDistrictExample example =new TblDistrictExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andParentIdEqualTo(pid);
+		List<TblDistrict> list=mapper.selectByExample(example);
+		if(list != null && list.size()>0){
+			return list;
+		}
+		return null;
+	}
+
+	
+	public void queryDistrictTree(List<ZTreeNode> nodes){
+System.out.println("-----district--------");
+		List<TblDistrict> rootDis=findDistrictsByPid(0);
+		if(rootDis != null){
+System.out.println("---root district tree is "+rootDis.size());
+			for(TblDistrict dis :rootDis){
+				ZTreeNode r1=new ZTreeNode();
+				r1.setId(dis.getId());
+				r1.setPid(null);
+				r1.setName(dis.getDisName());
+				nodes.add(r1);
+				
+				if(dis.getAreaLevelId()< cacheService.getMaxDistrictLevel()){
+					queryDistrictChildTree(nodes,dis.getId());
+				}
+				
+			}
+		}else{
+			//数据库中没有相应的区域树
+		}
+	}
+	
+	private void queryDistrictChildTree(List<ZTreeNode> nodes ,long pid){
+		List<TblDistrict> rootDis=findDistrictsByPid(pid);
+		if(rootDis != null){
+System.out.println("the pid = [ "+pid+" ] has the [ " +rootDis.size() +" ] children !");
+			for(TblDistrict dis :rootDis){
+				ZTreeNode r1=new ZTreeNode();
+				r1.setId(dis.getId());
+				r1.setPid(pid);
+				r1.setName(dis.getDisName());
+				nodes.add(r1);
+				
+				if(dis.getAreaLevelId()< cacheService.getMaxDistrictLevel()){
+					queryDistrictChildTree(nodes,dis.getId());
+				}
+				
+			}
+		}
+	}
+	
 }

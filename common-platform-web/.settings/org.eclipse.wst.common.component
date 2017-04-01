@@ -16,6 +16,9 @@
         <dependent-module archiveName="common-platform-model-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/common-platform-model/common-platform-model">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="common-platform-utils-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/common-platform-utils/common-platform-utils">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="common-platform-web"/>
         <property name="java-output-path" value="/common-platform-web/target/classes"/>
     </wb-module>

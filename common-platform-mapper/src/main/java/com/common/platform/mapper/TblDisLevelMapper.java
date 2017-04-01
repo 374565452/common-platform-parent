@@ -27,4 +27,6 @@ public interface TblDisLevelMapper {
     int updateByPrimaryKeySelective(TblDisLevel record);
 
     int updateByPrimaryKey(TblDisLevel record);
+    
+    int maxId();
 }

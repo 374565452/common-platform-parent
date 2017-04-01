@@ -40,6 +40,11 @@
 			<artifactId>common-platform-model</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>common-platform-utils</groupId>
+			<artifactId>common-platform-utils</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
   </dependencies>
   <build>
 		<pluginManagement>

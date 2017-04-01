@@ -140,16 +140,16 @@
 			{id:3,name:"角色4"},
 			{id:4,name:"角色5"}
 		];
-		function initTree(){
+		function initTree(treeData){
 			//alert(nodes2.length);
 		    //var teacherList = data.teacher;
 		    //var studentList = data.nodes;
-		    var treeData = [];
-		    treeData.push({id:"root",name:"所有角色",pId:null});
-		    for(var i=0,il=nodes2.length;i<il;i++){
-		        nodes2[i].pId = "root";
-		        treeData.push(nodes2[i]);
-		    }
+		    //var treeData = [];
+		    //treeData.push({id:"root",name:"所有角色",pId:null});
+		    //for(var i=0,il=nodes2.length;i<il;i++){
+		      //  nodes2[i].pId = "root";
+		      //  treeData.push(nodes2[i]);
+		    //}
 		    /*for(var i=0,il=studentList.length;i<il;i++){
 		　　　　 studentList[i].id = "s"+studentList[i].id;
 		        studentList[i].pId = studentList[i].tId;
@@ -166,7 +166,7 @@
             }
             //选中根节点的第一个节点信息
             if(nodes.length >0 && nodes[0]){
-            	if(nodes[0].children.length>0){
+            	if(nodes[0].children && nodes[0].children.length>0){
             		var childNode=nodes[0].children[0];
             		treeObj.selectNode(childNode);
             		treeObj.checkNode(childNode);  
@@ -178,7 +178,14 @@
 		    
 		}
 		(function(){
-			initTree();
+			var treeData;
+			callHttp("/common/platform/district/tree",null,function(data){
+				treeData=data.data;
+				initTree(treeData);
+			},function(data){
+				
+			});
+			//initTree();
 		}());
 
 	</script>
