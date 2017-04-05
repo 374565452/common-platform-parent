@@ -1,12 +1,14 @@
 package com.common.platform.utils.dto;
 
-public class ZTreeNode {
+public class LazyTreeNode {
 
 	private Object id;
 	
 	private Object pId;
 	
 	private String name;
+	
+	public boolean isParent;
 
 	public Object getId() {
 		return id;
@@ -32,5 +34,12 @@ public class ZTreeNode {
 		this.name = name;
 	}
 
+	public boolean isParent() {
+		return isParent;
+	}
+
+	public void setParent(boolean isParent) {
+		this.isParent = isParent;
+	}
 	
 }

@@ -18,6 +18,11 @@
 								<div>
 								    <ul class="ztree" id="dis_tree"></ul>
 								</div>
+								<!--start test tree 
+								<div>
+									<ul class="ztree" id="dis_tree2"></ul>
+								</div>-->
+								<!--end test tree -->
 							</div>
 					</div>
 				</div>
@@ -90,12 +95,12 @@
         		showLayer: false,  
 		        selectMulti:false//表示禁止多选
 		    },
-		    check:{//表示tree的节点在点击时的相关设置
+		    /*check:{//表示tree的节点在点击时的相关设置
 		        enable:true,//是否显示radio/checkbox
 		        chkStyle:"radio",//值为checkbox或者radio表示
 		        checkboxType:{p:"",s:""},//表示父子节点的联动效果
 		        radioType:"level"//设置tree的分组
-		    },
+		    },*/
 		    callback:{//表示tree的一些事件处理函数
 		        onClick:handlerClick,
 		        onCheck:handlerCheck
@@ -107,7 +112,7 @@
 		function handlerClick(event,treeId,treeNode){
 		   var zTree = $.fn.zTree.getZTreeObj("dis_tree");
 		   //zTree.selectNode(treeNode);
-		   zTree.checkNode(treeNode,true,true);
+		   //zTree.checkNode(treeNode,true,true);
 		   //treeNode.checked=true;
 		   //alert("aaaa----click");
 		}
@@ -116,47 +121,12 @@
 		 */
 		function handlerCheck(event,treeId,treeNode){
 		   var zTree = $.fn.zTree.getZTreeObj("dis_tree");
-		   zTree.selectNode(treeNode);
+		   //zTree.selectNode(treeNode);
 		   //alert("aaaa----check");
 		}
-		var data = {
-		    teacher:[
-		        {id:0,name:"张老师",sex:"男"},
-		        {id:1,name:"李老师",sex:"男"},
-		        {id:2,name:"王老师",sex:"女"}
-		    ],
-		    nodes:[
-		        {id:0,name:"角色1"},
-				{id:1,name:"角色2"},
-				{id:2,name:"角色3"},
-				{id:3,name:"角色4"},
-				{id:4,name:"角色5"}
-		    ]
-		}
-		var nodes2=[
-			{id:0,name:"角色1"},
-			{id:1,name:"角色2"},
-			{id:2,name:"角色3"},
-			{id:3,name:"角色4"},
-			{id:4,name:"角色5"}
-		];
+		
 		function initTree(treeData){
-			//alert(nodes2.length);
-		    //var teacherList = data.teacher;
-		    //var studentList = data.nodes;
-		    //var treeData = [];
-		    //treeData.push({id:"root",name:"所有角色",pId:null});
-		    //for(var i=0,il=nodes2.length;i<il;i++){
-		      //  nodes2[i].pId = "root";
-		      //  treeData.push(nodes2[i]);
-		    //}
-		    /*for(var i=0,il=studentList.length;i<il;i++){
-		　　　　 studentList[i].id = "s"+studentList[i].id;
-		        studentList[i].pId = studentList[i].tId;
-		        treeData.push(studentList[i]);
-		    }*/
 		    $.fn.zTree.init($("#dis_tree"),setting,treeData);
-
 		    var treeObj = $.fn.zTree.getZTreeObj("dis_tree");
 		    var nodes = treeObj.getNodes();//得到树的根节点信息
 		    //alert(nodes.length);
@@ -164,20 +134,79 @@
             for (var i = 0; i < nodes.length; i++) { //设置节点展开
                 treeObj.expandNode(nodes[i], true, false, true);
             }
+            treeObj.selectNode(nodes[0]);
             //选中根节点的第一个节点信息
-            if(nodes.length >0 && nodes[0]){
+           /* if(nodes.length >0 && nodes[0]){
             	if(nodes[0].children && nodes[0].children.length>0){
             		var childNode=nodes[0].children[0];
-            		treeObj.selectNode(childNode);
-            		treeObj.checkNode(childNode);  
+            		treeObj.selectNode(childNodes);
+            		//treeObj.checkNode(childNode);  
             	}
-            }
+            }*/
 		    /*if(nodes.length >0){
 		    	treeObj.selectNode(nodes[0]);  
 		    }*/
 		    
 		}
-		(function(){
+		/**按需加载数据，即需要打开子节点时，再去加载数据**/
+		var tree={
+			zTree:'',  
+			pNode:'',  
+			setting:{  
+				isSimpleData: true,  
+				treeNodeKey: "id",  
+				treeNodeParentKey: "pId",  
+				showLine: true,  
+				root:{   
+				     isRoot:true,  
+				     nodes:[]  
+				},
+				callback:{
+					onExpand:function(event,treeId,treeNode){  
+			               tree.pNode = treeNode;  
+			               //alert("aaaaaaaaaaaaaaaaaaaa");
+			               tree.loadNodeByPNode();  
+			           } 
+				}
+			},
+			
+			loadRootNode:function(){
+				 var zNodes=[];
+			     var parameter = {  
+			         pId:0  
+			     };  
+			     callHttp("/common/platform/district/lazy/tree",parameter,function(data){
+			    	 $.each(data.data,function(i,item){
+			    		  var html={id:item.id,pId:item.pId, name:item.name,isParent:item.isParent,parent:true };
+			    		  zNodes[i]=html;
+			    	 });
+			    	 $.fn.zTree.init($("#dis_tree2"), tree.setting,zNodes);
+				     tree.zTree = $.fn.zTree.getZTreeObj("dis_tree2");
+			     },function(data){
+			    	 
+			     });
+			     
+			},
+			loadNodeByPNode:function(){
+				var children=[];
+			    var folder=false;
+			    var parameter= {  
+			     	pId:tree.pNode.id //子节点的pcode是父节点的id  
+			    };
+			    //alert(parameter.pId);
+			    if(!tree.zTree.getNodeByParam("pId",tree.pNode.id)){
+			    	callHttp("/common/platform/district/lazy/tree",parameter,function(data){
+			    		 $.each(data.data,function(i,item){
+				    		  var html={id:item.id,pId:item.pId, name:item.name,isParent:item.isParent};
+				    		  folder=item.isParent;
+				    		  children[i]=html;
+				    	 });
+			    		 tree.zTree.addNodes(tree.pNode,children,folder); 
+			    	},function(data){});
+			    }
+			}
+		}
+		$(document).ready(function(){
 			var treeData;
 			callHttp("/common/platform/district/tree",null,function(data){
 				treeData=data.data;
@@ -185,7 +214,11 @@
 			},function(data){
 				
 			});
+			//tree.loadRootNode(); 
+		});
+		//(function(){
+			
 			//initTree();
-		}());
+		//}());
 
 	</script>

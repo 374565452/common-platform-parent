@@ -1,5 +1,6 @@
 package com.common.platform.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.common.platform.model.TblDistrictExample;
 import com.common.platform.model.TblDistrictExample.Criteria;
 import com.common.platform.service.ICacheService;
 import com.common.platform.service.IDistrictService;
+import com.common.platform.utils.dto.LazyTreeNode;
 import com.common.platform.utils.dto.ZTreeNode;
 
 @Service
@@ -71,7 +73,7 @@ System.out.println("---root district tree is "+rootDis.size());
 			for(TblDistrict dis :rootDis){
 				ZTreeNode r1=new ZTreeNode();
 				r1.setId(dis.getId());
-				r1.setPid(null);
+				r1.setpId(null);
 				r1.setName(dis.getDisName());
 				nodes.add(r1);
 				
@@ -92,7 +94,7 @@ System.out.println("the pid = [ "+pid+" ] has the [ " +rootDis.size() +" ] child
 			for(TblDistrict dis :rootDis){
 				ZTreeNode r1=new ZTreeNode();
 				r1.setId(dis.getId());
-				r1.setPid(pid);
+				r1.setpId(pid);
 				r1.setName(dis.getDisName());
 				nodes.add(r1);
 				
@@ -102,6 +104,28 @@ System.out.println("the pid = [ "+pid+" ] has the [ " +rootDis.size() +" ] child
 				
 			}
 		}
+	}
+
+	@Override
+	public List<LazyTreeNode> findLazyTreeNode(long id) {
+		List<TblDistrict> lists=findDistrictsByPid(id);
+		if(lists != null && lists.size()>0){
+			List<LazyTreeNode> treeNodes=new ArrayList<>();
+			for(TblDistrict td:lists){
+				LazyTreeNode n=new LazyTreeNode();
+				n.setId(td.getId());
+				n.setpId(id);
+				n.setName(td.getDisName());
+				if(td.getAreaLevelId()==cacheService.getMaxDistrictLevel()){
+					n.setParent(false);
+				}else{
+					n.setParent(true);
+				}
+				treeNodes.add(n);
+			}
+			return treeNodes;
+		}
+		return null;
 	}
 	
 }

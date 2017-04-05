@@ -48,6 +48,7 @@ System.out.println("-----read max from db----------------");
 			districtService.queryDistrictTree(treeNodes);
 			cache.setCacheValue(ICache.CACHE_DISTRICT_KEY, treeNodes);
 		}else{
+System.out.println("read the district from cache------------------");
 			treeNodes=(List<ZTreeNode>)nodes;
 		}
 		return treeNodes;
