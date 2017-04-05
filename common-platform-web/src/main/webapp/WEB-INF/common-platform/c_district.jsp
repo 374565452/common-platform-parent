@@ -345,10 +345,9 @@
 				$("#dis_parent").val(parentName);
 				//$("#dis_model").html("add-child-dis:click")
 				$("#dis_action").val(1);
+				
 				$("#dis_name").val("");
 				$("#dis_code").val("");
-				$("#dis_action").val("");
-				$("#dis_parentId").val("");
 				$("#dis_longitude").val("");
 				$("#dis_latitude").val("");
 				$("#dis_address").val("");
@@ -402,7 +401,8 @@
 						 msg: '区域添加成功',
 						        //btnok: '确定',
 						        //btncl:'取消'
-					});
+						
+					}).on(function(){$('#disModel').modal('toggle');});
 					initDistrictTree();
 				},function(data){
 					
