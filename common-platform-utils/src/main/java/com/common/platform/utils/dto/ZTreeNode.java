@@ -7,6 +7,16 @@ public class ZTreeNode {
 	private Object pId;
 	
 	private String name;
+	
+	private boolean isParent;
+	
+	public boolean getIsParent() {
+		return isParent;
+	}
+
+	public void setIsParent(boolean isParent) {
+		this.isParent = isParent;
+	}
 
 	public Object getId() {
 		return id;

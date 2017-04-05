@@ -10,4 +10,6 @@ public interface ICacheService {
 	
 	public List<ZTreeNode> findDistrictTree();
 	
+	public void deleteDistrictTree();
+	
 }

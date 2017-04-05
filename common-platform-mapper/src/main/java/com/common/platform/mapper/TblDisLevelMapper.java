@@ -1,5 +1,6 @@
 package com.common.platform.mapper;
 
+import com.common.platform.dto.DistrictDto;
 import com.common.platform.model.TblDisLevel;
 import com.common.platform.model.TblDisLevelExample;
 import java.util.List;
@@ -29,4 +30,5 @@ public interface TblDisLevelMapper {
     int updateByPrimaryKey(TblDisLevel record);
     
     int maxId();
+    
 }

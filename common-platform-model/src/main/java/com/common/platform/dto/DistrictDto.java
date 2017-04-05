@@ -1,7 +1,6 @@
-package com.common.platform.utils.dto;
+package com.common.platform.dto;
 
-
-public class DistrictDto2 {
+public class DistrictDto {
 
 	private long id;
 	
@@ -92,7 +91,5 @@ public class DistrictDto2 {
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
-	
-	
 	
 }

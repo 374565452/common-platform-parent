@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.common.platform.dto.DistrictDto;
 import com.common.platform.mapper.TblDistrictMapper;
 import com.common.platform.model.TblDistrict;
 import com.common.platform.model.TblDistrictExample;
@@ -49,6 +50,9 @@ public class DistrictServiceImpl implements IDistrictService {
 		//System.out.println(mapper+"-==========");
 		List<TblDistrict> list = mapper.selectByExample(example);
 		//System.out.println(list.size() +"==================");
+		if(list != null && list.size()>0){
+			return list.get(0);
+		}
 		return null;
 	}
 
@@ -75,6 +79,11 @@ System.out.println("---root district tree is "+rootDis.size());
 				r1.setId(dis.getId());
 				r1.setpId(null);
 				r1.setName(dis.getDisName());
+				if(dis.getAreaLevelId()< cacheService.getMaxDistrictLevel()){
+					r1.setIsParent(true);
+				}else{
+					r1.setIsParent(false);
+				}
 				nodes.add(r1);
 				
 				if(dis.getAreaLevelId()< cacheService.getMaxDistrictLevel()){
@@ -96,6 +105,13 @@ System.out.println("the pid = [ "+pid+" ] has the [ " +rootDis.size() +" ] child
 				r1.setId(dis.getId());
 				r1.setpId(pid);
 				r1.setName(dis.getDisName());
+				
+				if(dis.getAreaLevelId()< cacheService.getMaxDistrictLevel()){
+					r1.setIsParent(true);
+				}else{
+					r1.setIsParent(false);
+				}
+				
 				nodes.add(r1);
 				
 				if(dis.getAreaLevelId()< cacheService.getMaxDistrictLevel()){
@@ -126,6 +142,22 @@ System.out.println("the pid = [ "+pid+" ] has the [ " +rootDis.size() +" ] child
 			return treeNodes;
 		}
 		return null;
+	}
+
+	@Override
+	public DistrictDto findQualiedDistrict(long id) {
+		//public DistrictDto findQualiedDistrict(long id);
+		DistrictDto dto=mapper.selectQualiedDistrict(id);
+		if(dto != null){
+			return dto;
+		}
+		return null;
+	}
+
+	@Override
+	public int saveDistrict(TblDistrict dis) {
+		
+		return mapper.insert(dis);
 	}
 	
 }

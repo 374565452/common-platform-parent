@@ -39,4 +39,11 @@ public class MemoryCache implements ICache{
 		return true;
 	}
 
+	@Override
+	public boolean deleteValue(String key) {
+		if(cacheMap.containsKey(key)){
+			cacheMap.remove(key);
+		}
+		return true;
+	}
 }

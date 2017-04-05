@@ -12,4 +12,6 @@ public interface ICache {
 	
 	public boolean updateCacheValue(String key ,Object value);
 	
+	public boolean deleteValue(String key);
+	
 }

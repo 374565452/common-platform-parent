@@ -1,5 +1,6 @@
 package com.common.platform.mapper;
 
+import com.common.platform.dto.DistrictDto;
 import com.common.platform.model.TblDistrict;
 import com.common.platform.model.TblDistrictExample;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface TblDistrictMapper {
     int updateByPrimaryKeySelective(TblDistrict record);
 
     int updateByPrimaryKey(TblDistrict record);
+    
+    DistrictDto selectQualiedDistrict(long id);
 }

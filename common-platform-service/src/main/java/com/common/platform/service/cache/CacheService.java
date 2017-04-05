@@ -53,4 +53,10 @@ System.out.println("read the district from cache------------------");
 		}
 		return treeNodes;
 	}
+
+	@Override
+	public void deleteDistrictTree() {
+		//cache.setCacheValue(ICache.CACHE_DISTRICT_KEY, null);
+		cache.deleteValue(ICache.CACHE_DISTRICT_KEY);
+	}
 }
