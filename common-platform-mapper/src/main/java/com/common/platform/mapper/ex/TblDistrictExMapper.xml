@@ -29,5 +29,10 @@
 		 where d.id= #{id,jdbcType=BIGINT}
   </select>
   
+  <delete id="deleteByParentKey" parameterType="java.lang.Long" >
+    delete from tbl_district
+    where parent_id = #{pid,jdbcType=BIGINT}
+  </delete>
+  
   <!-- end add  -->  
 </mapper>

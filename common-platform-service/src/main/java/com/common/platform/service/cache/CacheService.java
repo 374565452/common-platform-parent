@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.common.platform.service.ICacheService;
 import com.common.platform.service.IDisLevelService;
 import com.common.platform.service.IDistrictService;
+import com.common.platform.service.IModuleService;
+import com.common.platform.utils.dto.MenuInfo;
 import com.common.platform.utils.dto.ZTreeNode;
 
 @Service
@@ -24,6 +26,9 @@ public class CacheService implements ICacheService{
 	
 	@Autowired
 	private IDistrictService districtService;
+	
+	@Autowired
+	private IModuleService moduleService;
 	
 	@Override
 	public int getMaxDistrictLevel() {
@@ -58,5 +63,20 @@ System.out.println("read the district from cache------------------");
 	public void deleteDistrictTree() {
 		//cache.setCacheValue(ICache.CACHE_DISTRICT_KEY, null);
 		cache.deleteValue(ICache.CACHE_DISTRICT_KEY);
+	}
+
+	@Override
+	public List<MenuInfo> getMenuInfos() {
+		List<MenuInfo> menuInfos;
+		Object infos=cache.getCacheValue(ICache.CACHE_MENU_INFO_KEY);
+		if(infos == null){
+			menuInfos=moduleService.getMenus();
+			if(menuInfos != null){
+				cache.setCacheValue(ICache.CACHE_MENU_INFO_KEY, menuInfos);
+			}
+		}else{
+			menuInfos=(List<MenuInfo>)infos;
+		}
+		return menuInfos;
 	}
 }

@@ -23,4 +23,10 @@ public interface IDistrictService {
 	
 	public int saveDistrict(TblDistrict dis);
 	
+	public int updateDistrict(TblDistrict dis);
+	
+	public int deleteByParentId(long id);
+	
+	public int deleteById(long id);
+	
 }

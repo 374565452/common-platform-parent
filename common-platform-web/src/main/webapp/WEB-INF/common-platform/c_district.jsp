@@ -87,8 +87,8 @@
 								  <div class="form-group">
 								    <div class="col-sm-offset-1 col-sm-10">
 								      <button type="button" class="btn btn-primary" id="addChildDis" data-moveable="true" data-toggle="modal" data-target="#disModel">添加子区域</button>
-								      <button type="button" class="btn btn-info">修改</button>
-								      <button type="button" class="btn btn-danger">删除</button>
+								      <button type="button" class="btn btn-info" id="updateDis" data-moveable="true" data-toggle="modal" data-target="#disModel">修改</button>
+								      <button type="button" class="btn btn-danger" id="deleteDis">删除</button>
 								    </div>
 								  </div>
 								</form>
@@ -171,7 +171,7 @@
 </div>
 
 <%@include file="c_tail.jsp" %>
-<script type="text/javascript" src="/lib/ztree/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="lib/ztree/jquery.ztree.all.min.js"></script>
 	<script type="text/javascript">
 		var setting = {
 		    data:{//表示tree的数据格式
@@ -216,7 +216,7 @@
 			var parameter = {
 					id:treeNode.id  
 			 };  
-			callHttp("/common/platform/district/qualized",parameter,function(data){
+			callHttp("common/platform/district/qualized",parameter,function(data){
 				var val=data.data;
 				$("#disId").val(val.id);
 				$("#longitude").val(val.longitude);
@@ -290,7 +290,7 @@
 			     var parameter = {  
 			         pId:0  
 			     };  
-			     callHttp("/common/platform/district/lazy/tree",parameter,function(data){
+			     callHttp("common/platform/district/lazy/tree",parameter,function(data){
 			    	 $.each(data.data,function(i,item){
 			    		  var html={id:item.id,pId:item.pId, name:item.name,isParent:item.isParent,parent:true };
 			    		  zNodes[i]=html;
@@ -310,7 +310,7 @@
 			    };
 			    //alert(parameter.pId);
 			    if(!tree.zTree.getNodeByParam("pId",tree.pNode.id)){
-			    	callHttp("/common/platform/district/lazy/tree",parameter,function(data){
+			    	callHttp("common/platform/district/lazy/tree",parameter,function(data){
 			    		 $.each(data.data,function(i,item){
 				    		  var html={id:item.id,pId:item.pId, name:item.name,isParent:item.isParent};
 				    		  folder=item.isParent;
@@ -324,7 +324,7 @@
 		
 		function initDistrictTree(){
 			var treeData;
-			callHttp("/common/platform/district/tree",null,function(data){
+			callHttp("common/platform/district/tree",null,function(data){
 				treeData=data.data;
 				initTree(treeData);
 			},function(data){
@@ -332,60 +332,89 @@
 			});
 		}
 		
-		$(document).ready(function(){
-			initDistrictTree();
-			//tree.loadRootNode(); 
-			
-			$('#addChildDis').click(function(){
-				//alert("ddddddddd");
-				$("#dis_title").html("添加子区域");
-				var parentId=$("#disId").val();
-				$("#dis_parentId").val(parentId);
-				var parentName=$("#disName").val();
-				$("#dis_parent").val(parentName);
-				//$("#dis_model").html("add-child-dis:click")
-				$("#dis_action").val(1);
-				
-				$("#dis_name").val("");
-				$("#dis_code").val("");
-				$("#dis_longitude").val("");
-				$("#dis_latitude").val("");
-				$("#dis_address").val("");
-				$("#dis_remark").val("");
+		function resetDisTextInput(){
+			$("#dis_name").val("");
+			$("#dis_code").val("");
+			$("#dis_longitude").val("");
+			$("#dis_latitude").val("");
+			$("#dis_address").val("");
+			$("#dis_remark").val("");
+		}
+		function addChildDisBtnClick(){
+			$("#dis_title").html("添加子区域");
+			var parentId=$("#disId").val();
+			$("#dis_parentId").val(parentId);
+			var parentName=$("#disName").val();
+			$("#dis_parent").val(parentName);
+			//$("#dis_model").html("add-child-dis:click")
+			$("#dis_action").val(1);
+			resetDisTextInput();
+		}
+		
+		function updateDisBtnClick(){
+			//首先要访问一下服务器，获取此区域的信息数据
+			$("#dis_action").val(2);
+			var disId=$("#disId").val();
+			callHttp("common/platform/district/"+disId,null,function(data){
+				var info=data.data;
+				$("#dis_parentId").val(info.parentId);
+				$("#dis_parent").val($("#parentName").val());
+				$("#dis_name").val(info.disName);
+				$("#dis_code").val(info.disCode);
+				$("#dis_longitude").val(info.longitude);
+				$("#dis_latitude").val(info.latitude);
+				$("#dis_address").val(info.disLogicAddress);
+				$("#dis_remark").val(info.remark);
 			});
-			
-			$('#dis_save').click(function(){
-				var disName=$("#dis_name").val();
-				if(disName==null ||disName==""){
-					Modal.alert({
-						 title: '错误',
-						 msg: '区域名称不可为空',
-						        //btnok: '确定',
-						        //btncl:'取消'
+		}
+		
+		function deleteDisBtnClick(){
+			var disName=$("#disName").val();
+			Modal.confirm(
+		    {
+		        msg: "是否删除【"+disName+"】该区域？，如果此区域下有子区域，会一同删除！"
+		    })
+		    .on( function (e) {
+		        //alert("返回结果：" + e);
+		        if(e==true){//点击确定按钮
+		        	var disId=$("#disId").val();
+		        	callHttp("common/platform/district/delete/"+disId,null,function(data){
+						Modal.alert({
+							 title: '信息',
+							 msg: '区域删除成功'+data.data
+						});
+						initDistrictTree();
+					},function(data){
+						
 					});
-					/*Modal.confirm(
-						    {
-						        msg: "是否删除角色？"
-						    })
-						    .on( function (e) {
-						        alert("返回结果：" + e);
-						    }); */
-					return;
-				}
-				var disCode=$("#dis_code").val();
-				if(disCode == null || disCode == ""){
-					Modal.alert({title:'错误',msg:'区域编码不能为空'});
-					return;
-				}
-				var actionType=$("#dis_action").val();
-				var parentId=$("#dis_parentId").val();
-				var longitude=$("#dis_longitude").val();
-				var latitude=$("#dis_latitude").val();
-				
-				var disAddress=$("#dis_address").val();
-				var disRemark=$("#dis_remark").val();
-				
-				var parameter={
+		        } 
+		    }); 
+		}
+		
+		function saveDisBtnClick(){
+			var disName=$("#dis_name").val();
+			if(disName==null ||disName==""){
+				Modal.alert({
+					 title: '错误',
+					 msg: '区域名称不可为空',
+					        //btnok: '确定',
+					        //btncl:'取消'
+				});
+				return;
+			}
+			var disCode=$("#dis_code").val();
+			if(disCode == null || disCode == ""){
+				Modal.alert({title:'错误',msg:'区域编码不能为空'});
+				return;
+			}
+			var actionType=$("#dis_action").val();
+			var parentId=$("#dis_parentId").val();
+			var longitude=$("#dis_longitude").val();
+			var latitude=$("#dis_latitude").val();
+			
+			var disAddress=$("#dis_address").val();
+			var disRemark=$("#dis_remark").val();
+			var parameter={
 					"disName":disName,
 					"disCode":disCode,
 					"actionType":actionType,
@@ -395,20 +424,54 @@
 					"disAddress":disAddress,
 					"disRemark":disRemark
 				}
-				callHttp("/common/platform/district/edit",parameter,function(data){
+			if(actionType==1){
+				callHttp("common/platform/district/add",parameter,function(data){
 					Modal.alert({
 						 title: '信息',
-						 msg: '区域添加成功',
-						        //btnok: '确定',
-						        //btncl:'取消'
-						
+						 msg: '区域添加成功'
 					}).on(function(){$('#disModel').modal('toggle');});
 					initDistrictTree();
 				},function(data){
 					
 				});
+			}else if(actionType==2){
+				var disId=$("#disId").val();
+				callHttp("common/platform/district/update/"+disId,parameter,function(data){
+					Modal.alert({
+						 title: '信息',
+						 msg: '区域修改成功'+data.data
+					}).on(function(){$('#disModel').modal('toggle');});
+					initDistrictTree();
+				},function(data){
+					
+				});
+			}else{
+				Modal.alert({
+					 title: '错误',
+					 msg: '错误的参数类型'
+				})
+			}
+		}
+		$(document).ready(function(){
+			initDistrictTree();
+			//tree.loadRootNode(); 
+			
+			$('#addChildDis').click(function(){
+				//alert("ddddddddd");
+				addChildDisBtnClick();
 			});
 			
+			$('#dis_save').click(function(){
+				saveDisBtnClick();
+			});
+			
+			$('#updateDis').click(function(){
+				updateDisBtnClick();
+			});
+			
+			$('#deleteDis').click(function(){
+				deleteDisBtnClick();
+			});
 			
 		});
 		//(function(){

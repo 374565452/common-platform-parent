@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +33,7 @@ public class DistrictController extends BaseController{
 	
 	@RequestMapping("/getAll")
 	public List<TblDistrict> getAllDistrict(){
-		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		return districtService.getAllDistrict();
 	}
 	
@@ -67,19 +68,14 @@ System.err.println("the id is "+id);
 		return onResult(dto, 500, "获取区域详细数据失败");
 	}
 	
-	@RequestMapping(value="/edit",method=RequestMethod.POST)
+	@RequestMapping(value="/add",method=RequestMethod.POST)
 	@ResponseBody
-	public JsonResult editDistrict(@ModelAttribute DistrictParam param){
+	public JsonResult addDistrict(@ModelAttribute DistrictParam param){
 		TblDistrict parent=districtService.findDistrictById(param.getParentId());
-		String error="";
-		if(param.getActionType()==1){
-			error+="添加区域时，";
-		}else{
-			error+="修改区域时，";
-		}
+		String error="添加区域时，";
 		if(parent == null){
 			error+="获取父区域时出错";
-	System.out.println(error);
+System.out.println(error);
 			return JsonResult.build(500, error);
 		}else{
 			int retur=0;
@@ -99,10 +95,54 @@ System.err.println("the id is "+id);
 				retur =districtService.saveDistrict(newDis);
 				//添加成功后，因为节点信息已经修改，所以需要重新来加载树节点
 				cacheService.deleteDistrictTree();
-	System.out.println("the return -----is " + retur);
+System.out.println("the return -----is " + retur);
+			}else{
+				return JsonResult.build(500, "错误的参数类型");
 			}
 			return JsonResult.ok(retur);
 		}
 		//return onResult(new Object(),500,"");
 	}
+	
+	@RequestMapping("/update/{id}")
+	@ResponseBody
+	public JsonResult updateDistrict(@PathVariable("id") long id ,@ModelAttribute DistrictParam param ){
+		TblDistrict d = districtService.findDistrictById(id);
+		if(d == null){
+			return JsonResult.build(500, "修改区域时，根据ID号获取区域时出错！");
+		}else{
+			if(param.getActionType()==2){
+				d.setLatitude(param.getLatitude());
+				d.setLongitude(param.getLongitude());
+				d.setDisCode(param.getDisCode());
+				d.setDisLogicAddress(param.getDisAddress());
+				d.setRemark(param.getDisRemark());
+				d.setDisName(param.getDisName());
+				d.setUpdatedDate(new Date());
+				d.setStatus(0);
+				int result=districtService.updateDistrict(d);
+				//修改成功后，因为节点信息已经修改，所以需要重新来加载树节点
+				cacheService.deleteDistrictTree();
+				return JsonResult.ok(result);
+			}else{
+				return JsonResult.build(500, "错误的参数类型");
+			}
+		}
+	}
+	@RequestMapping("/delete/{id}")
+	@ResponseBody
+	public JsonResult deleteDistrict(@PathVariable("id") long id){
+		int res=districtService.deleteById(id);
+		//删除成功后，因为节点信息已经修改，所以需要重新来加载树节点
+		cacheService.deleteDistrictTree();
+		return JsonResult.ok(res);
+	}
+	
+	@RequestMapping("/{id}")
+	@ResponseBody
+	public JsonResult getDistrictById(@PathVariable("id") long id){
+		TblDistrict districtById = districtService.findDistrictById(id);
+		return onResult(districtById, 500, "获取此区域失败");
+	}
+	
 }

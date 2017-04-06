@@ -163,5 +163,33 @@ System.out.println("the pid = [ "+pid+" ] has the [ " +rootDis.size() +" ] child
 		
 		return mapper.insert(dis);
 	}
+
+	@Override
+	public int updateDistrict(TblDistrict dis) {
+		return mapper.updateByPrimaryKey(dis);
+	}
+	
+	/***
+	 * 这里的删除操作，有些问题。有待改善
+	 */
+	@Override
+	public int deleteByParentId(long id) {
+		//List<TblDistrict> children=findDistrictsByPid(id);
+		//if(children != null && children)
+		exMapper.deleteByParentKey(id);
+		
+		return 0;
+	}
+
+	@Override
+	public int deleteById(long id) {
+		//TblDistrict dis=findDistrictById(id);
+		//if(dis.getAreaLevelId() < cacheService.getMaxDistrictLevel()){
+			int res = deleteByParentId(id);
+			System.out.println("delete children ,the result is "+res);
+		//}
+
+		return mapper.deleteByPrimaryKey(id);
+	}
 	
 }

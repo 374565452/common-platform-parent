@@ -22,14 +22,14 @@
         </div>
     <!-- system modal end -->
 
-	<script type="text/javascript" src="/lib/jquery/jquery.js"></script>
-	<script type="text/javascript" src="/js/zui.js"></script>
+	<script type="text/javascript" src="lib/jquery/jquery.js"></script>
+	<script type="text/javascript" src="js/zui.js"></script>
+	<script type="text/javascript" src="js/side_menu.js"></script>
 	
-	<script type="text/javascript" src="/js/side_menu.js"></script>
-	<script type="text/javascript" src="/js/admin.js"></script>
-	<<script type="text/javascript">
-	$(function () {
-	    window.Modal = function () {
+	<script type="text/javascript" src="js/admin.js"></script>
+	<script type="text/javascript">
+	function m_dialog(){
+		window.Modal = function () {
 	        var reg = new RegExp("\\[([^\\[\\]]*?)\\]", 'igm');
 	        var alr = $("#ycf-alert");
 	        var ahtml = alr.html();
@@ -109,7 +109,61 @@
 	        }
 
 	    }();
-	});
+	}
+	
+	function initMenu(){
+		callHttp("common/platform/module/menu",null,function(data){
+			var menus=data.data;
+			var menu_title='<div class="item vertical"><a href="';
+			var menu_tip1='"><i class=" ';
+			var menu_tip2='"></i><span>';
+			
+			var menu_ch1='<span class="arrow"></span>';
+			var menu_ch2='<div class="vertical-menu">';
+			var menu_tail='</div>';
+			var html="";
+			$.each(menus,function(i,menu){
+				html += menu_title;
+				html += menu.url;
+				html += menu_tip1;
+				html += menu.icon;
+				html += menu_tip2;
+				html += menu.menuName+"</span>";
+				if(menu.children != null){
+					html+= menu_ch1;
+					html += "</a>";
+					html += menu_ch2;
+					$.each(menu.children,function(j,child){
+						html+='<a href='+child.url+'>'+child.menuName+'</a>'
+					});
+					html += "</div>"
+				}else{
+					html += "</a>";
+				}
+				html += menu_tail;
+			});
+			console.log(html);
+			$(".sidebar-menu").html(html);
+			
+			
+			
+			 //responsiveView();
+	        //$(window).on('resize', responsiveView);
+			
+		},function(data){
+			
+		});
+	}
+	
+ 	
+	$(document).ready(function(){
+		m_dialog();
+		initMenu();
+		//$(".sidebar-menu").html(html);
+	});  
 </script>
+
+
+
 </body>
 </html>

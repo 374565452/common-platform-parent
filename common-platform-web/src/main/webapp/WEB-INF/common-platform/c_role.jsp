@@ -166,7 +166,7 @@
 			//$('#r_tree').tree('expand');
 		});*/
 	</script>
-<script type="text/javascript" src="/lib/ztree/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="lib/ztree/jquery.ztree.all.min.js"></script>
 	<script type="text/javascript">
 		var setting = {
 		    data:{//表示tree的数据格式
