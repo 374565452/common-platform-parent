@@ -1,10 +1,11 @@
 package com.common.platform.mapper;
 
-import com.common.platform.dto.DistrictDto;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.common.platform.model.TblDisLevel;
 import com.common.platform.model.TblDisLevelExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface TblDisLevelMapper {
     int countByExample(TblDisLevelExample example);
@@ -29,6 +30,5 @@ public interface TblDisLevelMapper {
 
     int updateByPrimaryKey(TblDisLevel record);
     
-    int maxId();
     
 }

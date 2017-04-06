@@ -29,5 +29,5 @@ public interface TblDistrictMapper {
 
     int updateByPrimaryKey(TblDistrict record);
     
-    DistrictDto selectQualiedDistrict(long id);
+    //DistrictDto selectQualiedDistrict(long id);
 }

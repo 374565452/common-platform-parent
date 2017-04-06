@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.common.platform.dto.DistrictDto;
 import com.common.platform.mapper.TblDistrictMapper;
+import com.common.platform.mapper.ex.TblDistrictExMapper;
 import com.common.platform.model.TblDistrict;
 import com.common.platform.model.TblDistrictExample;
 import com.common.platform.model.TblDistrictExample.Criteria;
@@ -21,6 +22,9 @@ public class DistrictServiceImpl implements IDistrictService {
 
 	@Autowired
 	private TblDistrictMapper mapper;
+	
+	@Autowired
+	private TblDistrictExMapper exMapper;
 	
 	@Autowired
 	private ICacheService cacheService;
@@ -147,7 +151,7 @@ System.out.println("the pid = [ "+pid+" ] has the [ " +rootDis.size() +" ] child
 	@Override
 	public DistrictDto findQualiedDistrict(long id) {
 		//public DistrictDto findQualiedDistrict(long id);
-		DistrictDto dto=mapper.selectQualiedDistrict(id);
+		DistrictDto dto=exMapper.selectQualiedDistrict(id);
 		if(dto != null){
 			return dto;
 		}

@@ -321,32 +321,5 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   
-  <!-- start add by kqz 2017-4-5 13:32 -->
-   <resultMap id="qualiedResultMap" type="com.common.platform.dto.DistrictDto" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="longitude" property="longitude" jdbcType="DOUBLE" />
-    <result column="latitude" property="latitude" jdbcType="DOUBLE" />
-    <result column="disName" property="disName" jdbcType="VARCHAR" />
-    <result column="parentName" property="parentName" jdbcType="VARCHAR" />
-    <result column="disCode" property="disCode" jdbcType="VARCHAR" />
-    <result column="disLogicAddress" property="disLogicAddress" jdbcType="VARCHAR" />
-    <result column="parentId" property="parentId" jdbcType="BIGINT" />
-    <result column="disLevelName" property="disLevelName" jdbcType="VARCHAR" />
-  </resultMap>
-  <select id="selectQualiedDistrict" resultMap="qualiedResultMap" parameterType="java.lang.Long" >
-	select d.id ,
-	 	   d.longitude,
-	 	   d.latitude,
-	 	   d.dis_name as disName,
-	 	   a.dis_name as parentName,
-	 	   d.parent_id as parentId,
-	 	   d.dis_code as disCode,
-	 	   d.dis_logic_address as disLogicAddress,
-	 	   l.dis_level_name as disLevelName
-	from (tbl_district as d left join tbl_district as a  on d.parent_id=a.id) 
-		 left join tbl_dis_level as l on d.area_level_id=l.id 
-		 where d.id= #{id,jdbcType=BIGINT}
-  </select>
-  
-  <!-- end add  -->  
+ 
 </mapper>

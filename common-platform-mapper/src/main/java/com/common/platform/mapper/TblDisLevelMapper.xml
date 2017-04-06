@@ -149,11 +149,7 @@
     </if>
   </select>
   
-  <!-- add by kqz 2017-4-1 15:07 -->
-  <select id="maxId" resultType="java.lang.Integer">
-  	select max(id) from tbl_dis_level
-  </select>
-  <!-- add by kqz 2017-4-1 15:07 -->
+
   <update id="updateByExampleSelective" parameterType="map" >
     update tbl_dis_level
     <set >
