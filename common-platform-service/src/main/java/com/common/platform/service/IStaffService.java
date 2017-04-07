@@ -11,4 +11,8 @@ public interface IStaffService {
 	
 	public PageDto<TblStaff> getPageStaff(int page);
 	
+	public List<TblStaff> getAllStaff(String like);
+	
+	public PageDto<TblStaff> getSearchStaff(int page,String lik);
+	
 }

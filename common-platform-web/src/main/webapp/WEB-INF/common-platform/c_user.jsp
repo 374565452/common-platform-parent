@@ -19,7 +19,14 @@
 					<form action="#" method="post">
 						<div class="search">
    							搜索：
-   								<input type="text" class="text" name="topic" placeholder="搜索" style="width:150px;">
+   							<%
+											String param=(String)request.getAttribute("search");
+											if(param != null){
+												%>
+   								<input type="text" id="topic" class="text" name="topic" placeholder="搜索" style="width:150px;" value="<%=param%>">
+   								<%} else{%>
+   									<input type="text" id="topic" class="text" name="topic" placeholder="搜索" style="width:150px;">
+   								<%} %>
    								<!-- 
    							&nbsp;搜索分类：
    								<div class="btn-group btn-dropdown">
@@ -45,7 +52,7 @@
    										<li><a href="#">禁用</a></li>
    									</ul>
    								</div> -->
-   							&nbsp;<button type="submit" value="查询" class="btn btn-primary-outline btn-xs"><i class="icon-search"></i>&nbsp;查询</button>  
+   							&nbsp;<button type="button" id="userSearch" value="查询" class="btn btn-primary-outline btn-xs"><i class="icon-search"></i>&nbsp;查询</button>  
    						</div>
 					</form>
 
@@ -100,6 +107,52 @@
 					            <th colspan="8">
 									<div class="pull-right">
 										<%
+											//String param=(String)request.getAttribute("search");
+											if(param != null){
+												%>
+										<!-- start pager -->
+											<%
+											
+											if(dto != null){
+												PageModel model=dto.getModel();
+											
+										%>
+										<ul class="pager">
+											<% 
+												if(model.getCurrentPage()!=1){
+											%>
+  											<li class="previous"><a href="common/platform/user/<%=model.getPre()%>?search=<%=param%>">«</a></li>
+  											<%} %>
+  											<% if(model.getCurrentPage()==1) {%>
+										  	<li class="active"><a href="common/platform/user/<%=model.getCurrentPage()%>?search=<%=param%>"><%=model.getCurrentPage() %></a></li>
+										  	<li><a href="common/platform/user/<%=model.getCurrentPage()+1%>?search=<%=param%>"><%=model.getCurrentPage()+1 %></a></li>
+										  	<%}else{ %>
+										  	<li><a href="common/platform/user/<%=model.getCurrentPage()-1%>?search=<%=param%>"><%=model.getCurrentPage()-1 %></a></li>
+										  	<li class="active"><a href="common/platform/user/<%=model.getCurrentPage()%>?search=<%=param%>"><%=model.getCurrentPage() %></a></li>
+										  	<%} %>
+										  	<% if(model.getNext()!=model.getTotalPage()){ 
+										  		
+										  	%>
+										  	<li><a href="common/platform/user/<%=model.getNext()%>?search=<%=param%>">...</a></li>
+										  	
+										  	<%} %>
+										  	<% if(model.getCurrentPage() != model.getTotalPage()){ %>
+										  	<li><a href="common/platform/user/<%=model.getTotalPage()%>?search=<%=param%>"><%=model.getTotalPage() %></a></li>
+										  	<%} %>
+										  	<% if(model.getCurrentPage() != model.getTotalPage()) {%>
+										  	<li class="next"><a href="common/platform/user/<%=model.getNext()%>?search=<%=param%>">»</a></li>
+										  	<%} %>
+										</ul>
+										<%
+											}
+										%>
+										<!-- end pager -->
+										<% 
+											}else{
+												%>
+									
+									
+										<%
 											if(dto != null){
 												PageModel model=dto.getModel();
 											
@@ -133,6 +186,10 @@
 										<%
 											}
 										%>
+										
+											<% 
+											}
+										%>
 									</div>
 					            </th>
 				          	</tr>
@@ -140,4 +197,23 @@
 				    </table>
 			</div>
 	</div>
+	
+	
 <%@include file="c_tail.jsp" %>
+
+<script type="text/javascript">
+		function userSearchBtnClick(){
+			var topic=$("#topic").val();
+			if(topic == "" || topic==null){
+				window.location.href="common/platform/user/1";
+			}else{
+				window.location.href="common/platform/user/1?search="+topic;
+			}
+			
+		}
+		$(document).ready(function(){
+			$("#userSearch").click(function(){
+				userSearchBtnClick();
+			});
+		});
+	</script>

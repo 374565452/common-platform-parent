@@ -18,10 +18,17 @@ public class UserController extends BaseController{
 	
 	@RequestMapping("/{page}")
 	public String findUserByPage(@PathVariable("page") int page){
-		
-		PageDto<TblStaff> dto = staffService.getPageStaff(page);
-		request.setAttribute("staff", dto);
-		
+		String param=request.getParameter("search");
+		//System.out.println(param);
+		if(param == null){
+			PageDto<TblStaff> dto = staffService.getPageStaff(page);
+			request.setAttribute("staff", dto);
+		}else{
+			PageDto<TblStaff> dto = staffService.getSearchStaff(page, param);
+//System.out.println(dto.getData().size()+"=="+param +"=="+dto.getModel().getTotalPage());
+			request.setAttribute("staff", dto);
+			request.setAttribute("search", param);
+		}
 		return "c_user";
 	}
 	
