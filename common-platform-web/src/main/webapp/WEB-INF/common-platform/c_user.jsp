@@ -1,4 +1,5 @@
-﻿<%@ page language="java" contentType="text/html; charset=utf-8"
+﻿<%@page import="java.text.SimpleDateFormat,com.common.platform.utils.dto.PageDto,com.common.platform.utils.dto.PageModel,com.common.platform.model.TblStaff,java.util.List" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 
 	<%@include file="c_header.jsp" %>
@@ -14,11 +15,12 @@
 			<div class="panel">
 				<div class="panel-heading"><h5>用户管理</h5></div>
 				<div class="panel-body">
-					<div class="pull-right"><button class="btn btn-primary">添加栏目</button></div>
+					<div class="pull-right"><button class="btn btn-primary"><i class="icon icon-plus"></i>新增</button></div>
 					<form action="#" method="post">
 						<div class="search">
-   							搜索名称：
-   								<input type="text" class="text" name="topic" placeholder="搜索名称" style="width:150px;">
+   							搜索：
+   								<input type="text" class="text" name="topic" placeholder="搜索" style="width:150px;">
+   								<!-- 
    							&nbsp;搜索分类：
    								<div class="btn-group btn-dropdown">
    									<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
@@ -42,7 +44,7 @@
    										<li><a href="#">启用</a></li>
    										<li><a href="#">禁用</a></li>
    									</ul>
-   								</div>
+   								</div> -->
    							&nbsp;<button type="submit" value="查询" class="btn btn-primary-outline btn-xs"><i class="icon-search"></i>&nbsp;查询</button>  
    						</div>
 					</form>
@@ -51,82 +53,86 @@
 				        <thead>
 				          	<tr>
 				          		
-					            <th width="50" class="text-center">ID</th>
-					            <th>栏目名称</th>
-					            <th width="200" class="text-center">上级栏目</th>
-					            <th width="100" class="text-center">是否启用</th>
-					            <th width="150" class="text-center">更新日期</th>
+					            <th width="50" class="text-center">编号</th>
+					            <th width="100" class="text-center">用户名</th>
+					            <th width="100" class="text-center">密码</th>
+					            <th width="200" class="text-center">创建时间</th>
+					            <th width="250" class="text-center">备注</th>
 					            <th width="140" class="text-center">操作</th>
 				          	</tr>
 				        </thead>
 				        <tbody>
-				          	<tr>
-					          	
-					            <td class="text-center">1</td>
-					            <td>这是栏目名称</td>
-					            <td class="text-center">--</td>
-					            <td class="text-center">
-									<div class="btn-group">
-          								<button type="button" class="btn btn-xs btn-primary">启用</button>
-          								<button type="button" class="btn btn-xs">禁用</button>
-        							</div>
-					            </td>
-					            <td class="text-center">2016-06-05 16:20</td>
-					            <td class="text-center">
-									<button type="button" class="btn btn-sm btn-success"><i class="icon-edit"></i> 编辑</button>
-									<button type="button" class="btn btn-sm btn-danger"><i class="icon-trash"></i> 删除</button>
-					            </td>
-				          	</tr>
-				          	<tr>
-					          	
-					            <td class="text-center">1</td>
-					            <td>这是栏目名称</td>
-					            <td class="text-center">--</td>
-					            <td class="text-center">
-									<div class="btn-group">
-          								<button type="button" class="btn btn-xs btn-primary">启用</button>
-          								<button type="button" class="btn btn-xs">禁用</button>
-        							</div>
-					            </td>
-					            <td class="text-center">2016-06-05 16:20</td>
-					            <td class="text-center">
-									<button type="button" class="btn btn-sm btn-success"><i class="icon-edit"></i> 编辑</button>
-									<button type="button" class="btn btn-sm btn-danger"><i class="icon-trash"></i> 删除</button>
-					            </td>
-				          	</tr>
-				          	<tr>
-					          	
-					            <td class="text-center">1</td>
-					            <td>这是栏目名称</td>
-					            <td class="text-center">--</td>
-					            <td class="text-center">
-									<div class="btn-group">
-          								<button type="button" class="btn btn-xs btn-primary">启用</button>
-          								<button type="button" class="btn btn-xs">禁用</button>
-        							</div>
-					            </td>
-					            <td class="text-center">2016-06-05 16:20</td>
-					            <td class="text-center">
-									<button type="button" class="btn btn-sm btn-success"><i class="icon-edit"></i> 编辑</button>
-									<button type="button" class="btn btn-sm btn-danger"><i class="icon-trash"></i> 删除</button>
-					            </td>
-				          	</tr>
+				        	<%
+				        		PageDto<TblStaff> dto=(PageDto<TblStaff>)request.getAttribute("staff");
+				        		if(dto != null){
+				        			List<TblStaff> staffs=dto.getData();
+				        			if(staffs != null && staffs.size()>0){
+				        				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				        				for(int i=0;i<staffs.size();i++){
+				        					TblStaff s=staffs.get(i);
+				        	%>
+				        				
+					          	<tr>
+						            <td class="text-center"><%=s.getId() %></td>
+						            <td><%=s.getUsername() %></td>
+						            <td class="text-center"><%=s.getUserpassword() %></td>
+						            <td class="text-center">
+										<%=sdf.format(s.getCreateDate()) %>
+						            </td>
+						            <td class="text-center"><%= s.getRemark()==null?"":s.getRemark() %></td>
+						            <td class="text-center">
+										<button type="button" class="btn btn-sm btn-success"><i class="icon-edit"></i> 编辑</button>
+										<button type="button" class="btn btn-sm btn-danger"><i class="icon-trash"></i> 删除</button>
+						            </td>
+					          	</tr>
+				          	<%
+				        				}
+				        	%>
+				          	<% 
+				        			}
+				        	%>
+				          	<% 
+				        		}
+				        	%>
 				        </tbody>
 				        <tfoot>
 							<tr>
-				          		
 					            <th colspan="8">
-									
 									<div class="pull-right">
+										<%
+											if(dto != null){
+												PageModel model=dto.getModel();
+											
+										%>
 										<ul class="pager">
-  											<li class="previous"><a href="#">«</a></li>
-										  	<li><a href="#">1</a></li>
-										  	<li class="active"><a href="#">2</a></li>
-										  	<li><a href="#">3</a></li>
-										  	<li><a href="#">...</a></li>
-										  	<li><a href="#">10</a></li>
-										  	<li class="next"><a href="#">»</a></li>
+											<% 
+												if(model.getCurrentPage()!=1){
+											%>
+  											<li class="previous"><a href="common/platform/user/<%=model.getPre()%>">«</a></li>
+  											<%} %>
+  											<% if(model.getCurrentPage()==1) {%>
+										  	<li class="active"><a href="common/platform/user/<%=model.getCurrentPage()%>"><%=model.getCurrentPage() %></a></li>
+										  	<li><a href="common/platform/user/<%=model.getCurrentPage()+1%>"><%=model.getCurrentPage()+1 %></a></li>
+										  	<%}else{ %>
+										  	<li><a href="common/platform/user/<%=model.getCurrentPage()-1%>"><%=model.getCurrentPage()-1 %></a></li>
+										  	<li class="active"><a href="common/platform/user/<%=model.getCurrentPage()%>"><%=model.getCurrentPage() %></a></li>
+										  	<%} %>
+										  	<% if(model.getNext()!=model.getTotalPage()){ 
+										  		
+										  	%>
+										  	<li><a href="common/platform/user/<%=model.getNext()%>">...</a></li>
+										  	
+										  	<%} %>
+										  	<% if(model.getCurrentPage() != model.getTotalPage()){ %>
+										  	<li><a href="common/platform/user/<%=model.getTotalPage()%>"><%=model.getTotalPage() %></a></li>
+										  	<%} %>
+										  	<% if(model.getCurrentPage() != model.getTotalPage()) {%>
+										  	<li class="next"><a href="common/platform/user/<%=model.getNext()%>">»</a></li>
+										  	<%} %>
 										</ul>
+										<%
+											}
+										%>
 									</div>
 					            </th>
 				          	</tr>
