@@ -72,7 +72,7 @@
 	<aside class="sidebar">
 		<div class="sidebar-menu">
 			
-			<!--  
+			 <!--  
 			<div class="item">
 				<a href="#">
 					<i class="icon icon-dashboard"></i>
@@ -111,6 +111,6 @@
 				</a>
 			</div>
 			
-			--> 
+			-->
 		</div>
 	</aside>

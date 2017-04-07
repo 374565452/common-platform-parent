@@ -202,6 +202,8 @@
 		   zTree.checkNode(treeNode,true,true);
 		   //treeNode.checked=true;
 		   alert("aaaa----click");
+		   
+		   //alert($(".sidebar .item.vertical > a"));
 		}
 		/*
 		  当点击前面的checkbox时，还需要设置选中当前节点

@@ -114,6 +114,7 @@
 	function initMenu(){
 		callHttp("common/platform/module/menu",null,function(data){
 			var menus=data.data;
+			var menu_1='<div class="item"><a href="';
 			var menu_title='<div class="item vertical"><a href="';
 			var menu_tip1='"><i class=" ';
 			var menu_tip2='"></i><span>';
@@ -123,7 +124,11 @@
 			var menu_tail='</div>';
 			var html="";
 			$.each(menus,function(i,menu){
-				html += menu_title;
+				if(menu.children != null){
+					html += menu_title;
+				}else{
+					html+=menu_1;
+				}
 				html += menu.url;
 				html += menu_tip1;
 				html += menu.icon;
@@ -143,10 +148,9 @@
 				html += menu_tail;
 			});
 			console.log(html);
-			$(".sidebar-menu").html(html);
+			$(".sidebar-menu").append(html);
 			
-			
-			
+			//alert($(".sidebar .item.vertical > a"));
 			 //responsiveView();
 	        //$(window).on('resize', responsiveView);
 			
@@ -160,6 +164,8 @@
 		m_dialog();
 		initMenu();
 		//$(".sidebar-menu").html(html);
+		
+		
 	});  
 </script>
 
