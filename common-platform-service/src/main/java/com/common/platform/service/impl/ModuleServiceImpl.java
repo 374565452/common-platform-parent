@@ -55,6 +55,7 @@ public class ModuleServiceImpl implements IModuleService{
 			List<MenuInfo> menus=new ArrayList<>();
 			for(TblModule m : l1){
 				MenuInfo menu=new MenuInfo();
+				menu.setId(m.getId());
 				menu.setIcon(m.getModuleIcon());
 				menu.setMenuName(m.getModuleName());
 				menu.setUrl(m.getModuleUrl());
@@ -64,6 +65,7 @@ public class ModuleServiceImpl implements IModuleService{
 					List<MenuInfo> childMenus=new ArrayList<>();
 					for(TblModule m2:child){
 						MenuInfo menu2=new MenuInfo();
+						menu2.setId(m2.getId());
 						menu2.setIcon(m2.getModuleIcon());
 						menu2.setMenuName(m2.getModuleName());
 						menu2.setUrl(m2.getModuleUrl());

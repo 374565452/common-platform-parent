@@ -147,7 +147,7 @@
 				}
 				html += menu_tail;
 			});
-			console.log(html);
+			//console.log(html);
 			$(".sidebar-menu").append(html);
 			
 			//alert($(".sidebar .item.vertical > a"));
