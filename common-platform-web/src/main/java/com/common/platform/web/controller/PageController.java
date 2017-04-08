@@ -21,7 +21,9 @@ public class PageController extends BaseController{
 		if(pa.equals("c_user")){
 			PageDto<TblStaff> dto = staffService.getPageStaff(1);
 			request.setAttribute("staff", dto);
-			
+			if(dto != null){
+				request.setAttribute("pageModel", dto.getModel());
+			}
 		}
 		return pa;
 	}

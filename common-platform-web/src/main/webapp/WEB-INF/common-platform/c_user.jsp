@@ -20,10 +20,10 @@
 						<div class="search">
    							搜索：
    							<%
-											String param=(String)request.getAttribute("search");
-											if(param != null){
+											String searchParam=(String)request.getAttribute("search");
+											if(searchParam != null){
 												%>
-   								<input type="text" id="topic" class="text" name="topic" placeholder="搜索" style="width:150px;" value="<%=param%>">
+   								<input type="text" id="topic" class="text" name="topic" placeholder="搜索" style="width:150px;" value="<%=searchParam%>">
    								<%} else{%>
    									<input type="text" id="topic" class="text" name="topic" placeholder="搜索" style="width:150px;">
    								<%} %>
@@ -106,90 +106,7 @@
 							<tr>
 					            <th colspan="8">
 									<div class="pull-right">
-										<%
-											//String param=(String)request.getAttribute("search");
-											if(param != null){
-												%>
-										<!-- start pager -->
-											<%
-											
-											if(dto != null){
-												PageModel model=dto.getModel();
-											
-										%>
-										<ul class="pager">
-											<% 
-												if(model.getCurrentPage()!=1){
-											%>
-  											<li class="previous"><a href="common/platform/user/<%=model.getPre()%>?search=<%=param%>">«</a></li>
-  											<%} %>
-  											<% if(model.getCurrentPage()==1) {%>
-										  	<li class="active"><a href="common/platform/user/<%=model.getCurrentPage()%>?search=<%=param%>"><%=model.getCurrentPage() %></a></li>
-										  	<li><a href="common/platform/user/<%=model.getCurrentPage()+1%>?search=<%=param%>"><%=model.getCurrentPage()+1 %></a></li>
-										  	<%}else{ %>
-										  	<li><a href="common/platform/user/<%=model.getCurrentPage()-1%>?search=<%=param%>"><%=model.getCurrentPage()-1 %></a></li>
-										  	<li class="active"><a href="common/platform/user/<%=model.getCurrentPage()%>?search=<%=param%>"><%=model.getCurrentPage() %></a></li>
-										  	<%} %>
-										  	<% if(model.getNext()!=model.getTotalPage()){ 
-										  		
-										  	%>
-										  	<li><a href="common/platform/user/<%=model.getNext()%>?search=<%=param%>">...</a></li>
-										  	
-										  	<%} %>
-										  	<% if(model.getCurrentPage() != model.getTotalPage()){ %>
-										  	<li><a href="common/platform/user/<%=model.getTotalPage()%>?search=<%=param%>"><%=model.getTotalPage() %></a></li>
-										  	<%} %>
-										  	<% if(model.getCurrentPage() != model.getTotalPage()) {%>
-										  	<li class="next"><a href="common/platform/user/<%=model.getNext()%>?search=<%=param%>">»</a></li>
-										  	<%} %>
-										</ul>
-										<%
-											}
-										%>
-										<!-- end pager -->
-										<% 
-											}else{
-												%>
-									
-									
-										<%
-											if(dto != null){
-												PageModel model=dto.getModel();
-											
-										%>
-										<ul class="pager">
-											<% 
-												if(model.getCurrentPage()!=1){
-											%>
-  											<li class="previous"><a href="common/platform/user/<%=model.getPre()%>">«</a></li>
-  											<%} %>
-  											<% if(model.getCurrentPage()==1) {%>
-										  	<li class="active"><a href="common/platform/user/<%=model.getCurrentPage()%>"><%=model.getCurrentPage() %></a></li>
-										  	<li><a href="common/platform/user/<%=model.getCurrentPage()+1%>"><%=model.getCurrentPage()+1 %></a></li>
-										  	<%}else{ %>
-										  	<li><a href="common/platform/user/<%=model.getCurrentPage()-1%>"><%=model.getCurrentPage()-1 %></a></li>
-										  	<li class="active"><a href="common/platform/user/<%=model.getCurrentPage()%>"><%=model.getCurrentPage() %></a></li>
-										  	<%} %>
-										  	<% if(model.getNext()!=model.getTotalPage()){ 
-										  		
-										  	%>
-										  	<li><a href="common/platform/user/<%=model.getNext()%>">...</a></li>
-										  	
-										  	<%} %>
-										  	<% if(model.getCurrentPage() != model.getTotalPage()){ %>
-										  	<li><a href="common/platform/user/<%=model.getTotalPage()%>"><%=model.getTotalPage() %></a></li>
-										  	<%} %>
-										  	<% if(model.getCurrentPage() != model.getTotalPage()) {%>
-										  	<li class="next"><a href="common/platform/user/<%=model.getNext()%>">»</a></li>
-										  	<%} %>
-										</ul>
-										<%
-											}
-										%>
-										
-											<% 
-											}
-										%>
+										<%@include file="c_pager.jsp" %>
 									</div>
 					            </th>
 				          	</tr>
