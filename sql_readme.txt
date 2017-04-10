@@ -1,0 +1,10 @@
+@common_platform.sql
+	完成表创建功能
+@common_platform-v0.2.sql
+	表tbl_module添加module_icon列以及default_module列
+	表tbl_module表中添加菜单数据
+@common_platform-v0.3.sql
+	表tbl_staff表中添加数据
+@common_platform-v0.4.sql
+	表tbl_module中添加设备列表菜单项
+	增加tbl_device表，增加tbl_device_type表
