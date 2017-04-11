@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.common.platform.mapper.ex.TblDeviceExMapper" >
+  <resultMap id="deviceExMap" type="com.common.platform.dto.DeviceModelEx" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="device_code" property="deviceCode" jdbcType="VARCHAR" />
+    <result column="device_name" property="deviceName" jdbcType="VARCHAR" />
+    <result column="device_type_id" property="deviceTypeId" jdbcType="INTEGER" />
+    <result column="device_status" property="deviceStatus" jdbcType="INTEGER" />
+    <result column="district_id" property="districtId" jdbcType="BIGINT" />
+    <result column="latitude" property="latitude" jdbcType="DOUBLE" />
+    <result column="longitude" property="longitude" jdbcType="DOUBLE" />
+    <result column="vol" property="vol" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <select id="selectDetailDevice" resultMap="deviceExMap" >
+	select d.id as id
+		,d.device_code as deviceCode
+		,d.device_name as deviceName
+		,d.district_id as districtId
+		,d.device_type_id as deviceTypeId
+		,d.device_status as deviceStatus
+		,d.vol 
+		,a.dis_name as disName
+		,c.type_name as typeName
+ 	from (tbl_device as d LEFT JOIN tbl_district as a on d.district_id=a.id)
+		LEFT JOIN tbl_device_type as c on d.device_type_id =c.id 
+  </select>
+  
+  <select id="searchDetailDeviceByCode" resultMap="deviceExMap" parameterType="java.lang.String">
+  	<bind name="pattern" value="'%' + _parameter + '%'" />
+  	select d.id as id
+		,d.device_code as deviceCode
+		,d.device_name as deviceName
+		,d.district_id as districtId
+		,d.device_type_id as deviceTypeId
+		,d.device_status as deviceStatus
+		,d.vol 
+		,a.dis_name as disName
+		,c.type_name as typeName
+ 	from (tbl_device as d LEFT JOIN tbl_district as a on d.district_id=a.id)
+		LEFT JOIN tbl_device_type as c on d.device_type_id =c.id where d.device_code LIKE #{pattern}
+  </select>
+  
+</mapper>

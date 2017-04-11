@@ -22,7 +22,9 @@
   											<%} %>
   											<% if(model.getCurrentPage()==1) {%>
 										  	<li class="active"><a href="<%=realPath %>/<%=model.getCurrentPage()%>?search=<%=param%>"><%=model.getCurrentPage() %></a></li>
+										  	<% if(model.getCurrentPage() <model.getTotalPage()){ %>
 										  	<li><a href="<%=realPath %>/<%=model.getCurrentPage()+1%>?search=<%=param%>"><%=model.getCurrentPage()+1 %></a></li>
+										  	<%} %>
 										  	<%}else{ %>
 										  	<li><a href="<%=realPath %>/<%=model.getCurrentPage()-1%>?search=<%=param%>"><%=model.getCurrentPage()-1 %></a></li>
 										  	<li class="active"><a href="<%=realPath %>/<%=model.getCurrentPage()%>?search=<%=param%>"><%=model.getCurrentPage() %></a></li>

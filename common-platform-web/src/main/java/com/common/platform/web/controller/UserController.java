@@ -23,35 +23,15 @@ public class UserController extends BaseController{
 		if(param == null){
 			PageDto<TblStaff> dto = staffService.getPageStaff(page);
 			request.setAttribute("staff", dto);
-			if(dto != null){
-				request.setAttribute("pageModel", dto.getModel());
-			}
+			setModel(dto);
 		}else{
 			PageDto<TblStaff> dto = staffService.getSearchStaff(page, param);
 //System.out.println(dto.getData().size()+"=="+param +"=="+dto.getModel().getTotalPage());
 			request.setAttribute("staff", dto);
 			request.setAttribute("search", param);
-			if(dto != null){
-				request.setAttribute("pageModel", dto.getModel());
-			}
+			setModel(dto);
 		}
-		String path=request.getContextPath();
-		//System.out.println("path-===="+path);
-		String uri=request.getRequestURI();
-		uri=uri.replace(path, "");
-		//System.out.println(uri.indexOf(path)+"------------");
-		//uri.lastIndexOf(str)
-		int index=uri.lastIndexOf("/");
-		//System.out.println(uri.substring(uri.lastIndexOf(path),index)+"================================");
-		String realPath=uri.substring(1, index);
-		//realPath与下面的servletPath是一样的，
-		//System.out.println(uri.substring(1, index)+"=====================");
-		//System.out.println(request.getpa);
-		//System.out.println(request.getRequestURL() +"=== uri" +request.getRequestURI());
-		String servletPath=request.getServletPath();
-		servletPath=servletPath.substring(1, servletPath.lastIndexOf("/"));
-		//System.out.println(servletPath+"=====getServletPath");
-		request.setAttribute("realPath", servletPath);
+		setRealPath();
 		return "c_user";
 	}
 	

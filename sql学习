@@ -4,5 +4,15 @@
 select d.id,d.longitude,d.latitude,d.dis_name,a.dis_name as parent_name,d.dis_code,d.dis_logic_address,l.dis_level_name 
 from (tbl_district as d left join tbl_district as a  on d.parent_id=a.id) 
  LEFT JOIN tbl_dis_level as l on d.area_level_id=l.id where d.id=1;
+ <!--
+ 	获取设备信息
+ -->
  
- 
+select d.id as id,d.device_code as deviceCode,d.device_name as deviceName,
+	d.district_id as districtId,d.device_type_id as deviceTypeId,d.device_status as deviceStatus
+,d.vol ,a.dis_name as disName,c.type_name as typeName
+
+ from (tbl_device as d LEFT JOIN tbl_district as a on d.district_id=a.id)
+	LEFT JOIN tbl_device_type as c on d.device_type_id =c.id
+	
+@2017-4-11 11:20 在sql语句的结束处不能有;因为mybatis在进行分页查询时，会在sql语句的末端加入limit语法，如果有;则会出现语法错误

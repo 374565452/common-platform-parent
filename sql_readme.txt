@@ -8,3 +8,5 @@
 @common_platform-v0.4.sql
 	表tbl_module中添加设备列表菜单项
 	增加tbl_device表，增加tbl_device_type表
+@common_platform-v0.5.sql
+	表tbl_device中添加测试数据
