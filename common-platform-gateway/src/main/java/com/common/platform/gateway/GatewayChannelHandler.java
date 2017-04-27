@@ -1,5 +1,8 @@
 package com.common.platform.gateway;
 
+import com.common.platform.gateway.coder.BroadcastDecoder;
+import com.common.platform.gateway.coder.BroadcastEncoder;
+
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
@@ -70,10 +73,13 @@ public class GatewayChannelHandler extends ChannelInitializer<SocketChannel>{
 		// TimeUnit.SECONDS));
 		// ch.pipeline().addLast(new ByteToIntegerDecoder());
 		// ch.pipeline().addLast(new IntegerToByteEncoder());
-		ch.pipeline().addLast("decoder", new StringDecoder());
-		ch.pipeline().addLast("encoder", new StringEncoder());
+		//ch.pipeline().addLast("decoder", new StringDecoder());
+		//ch.pipeline().addLast("encoder", new StringEncoder());
+		ch.pipeline().addLast("decoder", new BroadcastDecoder());
+		ch.pipeline().addLast("encoder", new BroadcastEncoder());
 		//ch.pipeline().addLast(new ChannelInboundHandler(this.nettyServer.getGroup()));
-		ch.pipeline().addLast(new GatewaySocketHandler(this.gServer.getGroup()));
+		//ch.pipeline().addLast(new GatewaySocketHandler(this.gServer.getGroup()));
+		ch.pipeline().addLast(new BroadcastSocketHandler());
 	}
 
 }
