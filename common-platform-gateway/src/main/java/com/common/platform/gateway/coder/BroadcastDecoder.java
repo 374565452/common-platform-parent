@@ -7,12 +7,14 @@ import com.common.platform.gateway.protocol.ProtocolConst;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
 public class BroadcastDecoder extends ByteToMessageDecoder {
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 		int readLen = in.readableBytes();// 接收到的数据的长度
+		//LengthFieldBasedFrameDecoder
 System.out.println(readLen);
 		try {
 			if (readLen > ProtocolConst.PROTOCOL_MIN_LEN) {

@@ -25,6 +25,11 @@ public class Mp3FileUtil {
 	public void initStream(String filePath) throws Exception {
 		this.filePath=filePath;
 		File file = new File(filePath);
+		if(fis !=null ){
+			fis.close();
+			fis=null;
+		}
+		readPos=0;
 		fis = new FileInputStream(file);
 		fileSize = fis.available();
 	}

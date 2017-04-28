@@ -15,7 +15,7 @@ public class PlayMp3Business extends BusinessLogicBase {
 		}else{
 			//从网络中获取到的数据
 			byte[] data = getProtocol().getData();
-			System.out.println("the play mp3 return data is --"+(int)((data[0]<<8)&0x0000FFFF+data[1]));
+			System.out.println("the play mp3 return data is --"+(int)((int)(data[0] << 8)+(int)data[1])+"  the length is -- "+data.length);
 		}
 		try {
 			byte[] mp3Data=Mp3FileUtil.getInstance().readFile(8192);
