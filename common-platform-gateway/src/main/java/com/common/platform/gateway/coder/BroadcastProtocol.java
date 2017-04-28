@@ -73,9 +73,9 @@ public class BroadcastProtocol {
 	}
 
 	public byte[] realData() {
-		int dataLen =0;
-		if(data != null){
-			dataLen=data.length;
+		int dataLen = 0;
+		if (data != null) {
+			dataLen = data.length;
 		}
 		int realDataLen = ProtocolConst.PROTOCOL_MIN_LEN + dataLen;
 		byte[] rData = new byte[realDataLen];
@@ -84,7 +84,7 @@ public class BroadcastProtocol {
 		rData[2] = (byte) (command & 0xFF);
 		rData[3] = (byte) ((len >>> 8) & 0xFF);// >>>无符号右移
 		rData[4] = (byte) (len & 0xFF);
-		if(data != null){
+		if (data != null) {
 			System.arraycopy(data, 0, rData, 5, dataLen);
 		}
 		rData[5 + dataLen] = (byte) ((crc16 >>> 8) & 0xFF);
@@ -102,53 +102,61 @@ public class BroadcastProtocol {
 
 		private short len = 0;
 
-		private short crc16 = 0 ;
+		private short crc16 = 0;
 
 		private byte[] data = null;
-		
-		public Builder header(byte val){
-			header=val;
+
+		public Builder header(byte val) {
+			header = val;
 			return this;
 		}
-		
-		public Builder tail(byte val){
-			tail=val;
+
+		public Builder tail(byte val) {
+			tail = val;
 			return this;
 		}
-		
-		public Builder command(short val){
-			command=val;
+
+		public Builder command(short val) {
+			command = val;
 			return this;
 		}
-		
-		public Builder len(short val){
-			len=val;
+
+		public Builder len(short val) {
+			len = val;
 			return this;
 		}
-		
-		public Builder crc16(short val){
-			crc16=val;
+
+		public Builder crc16(short val) {
+			crc16 = val;
 			return this;
 		}
-		
-		public Builder data(byte[]val){
-			data=val;
+
+		public Builder data(byte[] val) {
+			data = val;
 			return this;
 		}
-		public BroadcastProtocol build(){
+
+		public BroadcastProtocol build() {
 			return new BroadcastProtocol(this);
 		}
 	}
-	
-	private BroadcastProtocol(Builder b){
-		header=b.header;
-		tail=b.tail;
-		command=b.command;
-		len=b.len;
-		crc16=b.crc16;
-		data=b.data;
+
+	private BroadcastProtocol(Builder b) {
+		header = b.header;
+		tail = b.tail;
+		command = b.command;
+		len = b.len;
+		crc16 = b.crc16;
+		data = b.data;
 	}
-	
+
+	/**
+	 * 对于三者使用的总结： 
+	 * 1.如果要操作少量的数据用 = String 
+	 * 2.单线程操作字符串缓冲区 下操作大量数据 = StringBuilder
+	 * 3.多线程操作字符串缓冲区 下操作大量数据 = StringBuffer
+	 */
+
 	@Override
 	public String toString() {
 		/*

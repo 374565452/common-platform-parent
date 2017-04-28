@@ -25,7 +25,7 @@ System.out.println(readLen);
 				readBytes.getBytes(0, bs);
 				short crc = in.readShort();
 				byte readTail = in.readByte();
-
+				
 				/*
 				 * BroadcastProtocol bp = new BroadcastProtocol();
 				 * bp.setHeader(readHeader); bp.setTail(readTail);
@@ -34,7 +34,7 @@ System.out.println(readLen);
 				 */
 				BroadcastProtocol bp = new BroadcastProtocol.Builder().header(readHeader).tail(readTail)
 						.command(readCommand).len(readDataLen).crc16(crc).data(bs).build();
-System.out.println(bp.toString());
+//System.out.println(bp.toString());
 				out.add(bp);
 			}
 		} catch (Exception e) {
