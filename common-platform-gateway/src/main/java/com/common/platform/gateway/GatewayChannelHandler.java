@@ -78,13 +78,15 @@ public class GatewayChannelHandler extends ChannelInitializer<SocketChannel>{
 		//ch.pipeline().addLast("encoder", new StringEncoder());
 		//加上下面的解码器，是为了解决拆包与分包问题
 		/**
+		 * 加上ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(16*1024, 3, 2,3,0));可以实现拆包与分包问题
 		 * 16*1024 代表一包数据最长为16*1024
 		 * 3 代表每一包数据从4个数据开始为后面数据的长度
 		 * 2代表的是数据长度为占有2个字节
 		 * 3代表占据这么长数据后面还有3个字节（CRC16 + 协议尾）
 		 * 0忽略包头信息，返给上层时会去掉这部份bytes
+		 * @2017-5-2 实现自己的编码器，解决拆包与分包问题
 		 */
-		ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(16*1024, 3, 2,3,0));
+		//ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(16*1024, 3, 2,3,0));
 		ch.pipeline().addLast("decoder", new BroadcastDecoder());
 		ch.pipeline().addLast("encoder", new BroadcastEncoder());
 		//ch.pipeline().addLast(new ChannelInboundHandler(this.nettyServer.getGroup()));
