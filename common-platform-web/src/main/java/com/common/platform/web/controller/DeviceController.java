@@ -20,9 +20,6 @@ public class DeviceController extends BaseController{
 	
 	@RequestMapping("/{page}")
 	public String getDeviceModelByPage(@PathVariable("page")int page){
-	
-		//String savedDir = request.getSession().getServletContext().getRealPath("fileDir"); 
-//System.out.println(savedDir+"=========================");
 		String param=request.getParameter("search");
 //System.out.println(param);		
 		if(param == null){

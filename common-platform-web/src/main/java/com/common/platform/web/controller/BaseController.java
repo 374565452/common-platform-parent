@@ -1,16 +1,8 @@
 package com.common.platform.web.controller;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.common.platform.utils.JsonResult;
@@ -51,30 +43,6 @@ public class BaseController {
 		if(dto !=null){
 			request.setAttribute("pageModel", dto.getModel());
 		}
-	}
-	
-	protected String doResponse(String path) throws Exception{
-		// 创建根节点 并设置它的属性 ;     
-        Element root = new Element("EBDResponse");
-        // 将根节点添加到文档中；     
-        Document Doc = new Document(root);     
-          
-           // 创建节点 book;     
-           Element result = new Element("ResultCode").setText("2");  
-           root.addContent(result); 
-           Element desc =new Element("ResultDesc").setText("");
-           root.addContent(desc);
-           // 给 book 节点添加子节点并赋值；     
-           //elements.addContent(new Element("id").    
-           //elements.addContent(new Element("name").setText(books[i].getBook_name()));    
-           //    
-            //EBDI_11111111111.xml;
-        // 输出 books.xml 文件；    
-        // 使xml文件 缩进效果  
-        Format format = Format.getPrettyFormat();  
-        XMLOutputter XMLOut = new XMLOutputter(format);  
-        XMLOut.output(Doc, new FileOutputStream(path+"EBDI_11111111111.xml"));  
-        return "EBDI_11111111111.xml";
 	}
 	
 	protected void setRealPath(){
