@@ -1,12 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%
-	String w_path = request.getContextPath();
-	String w_basePath = request.getServerName() + ":" + request.getServerPort() + w_path + "/";
-	String sock_basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-			+ w_path + "/";
-%>
-	
 </div>
 
    <!-- system modal start -->
@@ -166,50 +159,12 @@
 		});
 	}
 	
-	var websocket;
-	function connect() {
-		var url='<%=w_basePath%>';
-		var sockUrl='<%=sock_basePath%>';
-		if ('WebSocket' in window) {
-			alert("WebSocket");
-			websocket = new WebSocket("ws://" + url + "websocket");
-		} else if ('MozWebSocket' in window) {
-			alert("MozWebSocket")
-			websocket = new MozWebSocket("ws://" + url + "websocket");
-		} else {
-			alert("SockJs")
-			websocket = new SockJS(sockUrl + "sockjs/websocket");
-		}
-	//alert(url +"====="+sockUrl);
-		websocket.onopen = function(evnt) {
-			//alert("connected to the server-----")
-		};
-		websocket.onmessage = function(evnt) {
-			//$("#webSocketResult").val(
-					//"(<font color='red'>" + evnt.data + "</font>)")
-			Modal.alert({
-				 title: '信息',
-				 msg: evnt.data,
-				        //btnok: '确定',
-				        //btncl:'取消'
-			});	
-			websocketSend('hello world !');
-		};
-		websocket.onerror = function(evnt) {
-		};
-		websocket.onclose = function(evnt) {
-		};
-	}
-	function websocketSend(message){
-		if(websocket.readyState === WebSocket.OPEN){
-			websocket.send(message);
-		}
-	}
+ 	
 	$(document).ready(function(){
 		m_dialog();
 		initMenu();
 		//$(".sidebar-menu").html(html);
-		connect();
+		
 		
 	});  
 </script>
