@@ -1,4 +1,4 @@
-package com.common.platform.other.platform;
+package com.common.platform.other;
 
 import java.io.File;
 import java.util.Iterator;

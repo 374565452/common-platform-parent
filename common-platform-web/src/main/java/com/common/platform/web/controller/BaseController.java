@@ -1,8 +1,6 @@
 package com.common.platform.web.controller;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,7 +50,6 @@ public class BaseController {
 			request.setAttribute("pageModel", dto.getModel());
 		}
 	}
-	
 	protected String doResponse(String path) throws Exception{
 		// 创建根节点 并设置它的属性 ;     
         Element root = new Element("EBDResponse");
